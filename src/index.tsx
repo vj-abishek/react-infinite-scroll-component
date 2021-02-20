@@ -236,6 +236,11 @@ export default class InfiniteScroll extends Component<Props, State> {
   };
 
   isElementAtTop(target: HTMLElement, scrollThreshold: string | number = 0.8) {
+    const isMobile =
+      navigator.maxTouchPoints || 'ontouchstart' in document.documentElement;
+
+    if (isMobile) return target.scrollTop === 0;
+
     const clientHeight =
       target === document.body || target === document.documentElement
         ? window.screen.availHeight
