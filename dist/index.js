@@ -382,14 +382,19 @@ var InfiniteScroll = /** @class */ (function (_super) {
     };
     InfiniteScroll.prototype.isElementAtTop = function (target, scrollThreshold) {
         if (scrollThreshold === void 0) { scrollThreshold = 0.8; }
+        var getChromeVersion = function () {
+            var raw = navigator.userAgent.match(/Chrom(e|ium)\/([0-9]+)\./);
+            return raw ? parseInt(raw[2], 10) : false;
+        };
         var isMobile = navigator.maxTouchPoints || 'ontouchstart' in document.documentElement;
+        var isOldMobileBrowser = isMobile && (getChromeVersion() <= 80);
         var clientHeight = target === document.body || target === document.documentElement
             ? window.screen.availHeight
             : target.clientHeight;
         var threshold = parseThreshold(scrollThreshold);
-        if (isMobile && threshold.unit === ThresholdUnits.Pixel)
+        if (isOldMobileBrowser && threshold.unit === ThresholdUnits.Pixel)
             return target.scrollTop <= 200 + threshold.value;
-        if (isMobile)
+        if (isOldMobileBrowser)
             return target.scrollTop <= 150;
         if (threshold.unit === ThresholdUnits.Pixel) {
             return (target.scrollTop <=

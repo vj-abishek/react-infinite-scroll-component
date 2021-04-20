@@ -237,7 +237,7 @@ export default class InfiniteScroll extends Component<Props, State> {
 
   isElementAtTop(target: HTMLElement, scrollThreshold: string | number = 0.8) {
 
-    function getChromeVersion () {     
+    const getChromeVersion = () => {     
     const raw = navigator.userAgent.match(/Chrom(e|ium)\/([0-9]+)\./);
 
     return raw ? parseInt(raw[2], 10) : false;
